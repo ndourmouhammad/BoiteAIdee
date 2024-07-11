@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         form.reset();
         showFormMessage('Idée ajoutée avec succès !', 'success');
         
+        
       } else {
         form.style.display = 'none';
         flashmessage.textContent = ('Veuillez corriger les erreurs et réessayer.');
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
       formMessage.textContent = message;
       formMessage.className = `form-message ${type}`;
       setTimeout(() => {
-        formMessage.style.display = "none";
+        formMessage.textContent = '';
       }, 2000);
     }
   
