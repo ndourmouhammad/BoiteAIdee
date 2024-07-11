@@ -1,152 +1,99 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,700&display=swap");
-
 body {
-  padding: 0;
-  margin: 0;
-  font-family: "Nunito Sans", sans-serif;
-  display: flex;
-  align-items:flex-start;
-  justify-content: center;
-  height: 100vh; /* Ajout de cette ligne */
-  background-image: url(images/pattern.avif);
-}
-
-#submitBtn {
-  border: 1px solid #D17931;
-  background-color: #D17931;
-  color: white;
-  cursor: pointer;
-}
-
-#submitBtn:hover {
-  border: 1px solid #504dc1;
-  background-color: #504dc1;
-  color: white;
-}
-
-.error {
-  color: #D17931;
-}
-
-.success {
-  color: green;
-  margin-top: 10px;
-}
-.welcome {
-  width: 50%;
-  height: 28rem;
-  border-radius: 10%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-bottom: -10rem;
-}
-.welcome img {
-  width: 100%;
-}
-.welcome h1 {
-  font-size: 20px;
-  text-align: center;
-  color: white;
-  font-size: x-large;
-}
-#powered {
-  text-decoration: underline;
-  color: #D17931;
-}
-.container {
-  display: flex;
-  justify-content: space-around;
-  
-  gap: 2rem;
-}
-.formulaire {
-  padding: 20px;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.formulaire h1 {
-    text-align: center;
-}
-.hide {
-  display: none;
-}
-.error {
-  display: block;
-  margin-top: 5px;
-  color: red;
-}
-
-.hidden {
-  display: none;
-}
-
-#submitSuccess {
-  color: green;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  overflow-y: scroll;
-}
-th, td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-th {
-  background-color: rgba(255, 0, 0, 0.5);
-}
-
-tr:hover {
-  background-color: rgba(255, 0, 0, 0.2); /* Rouge un peu plus foncé au survol */
-}
-.table {
-  margin-top: -2rem;
-}
-
-button {
-  width: 25%;
-}
-
-@media only screen and (max-width: 767px) {
-  body {
-    /* Exemples de styles pour les téléphones */
-    font-size: 14px;
-    width: 100%;
-    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background: url(images/pattern.avif);
+    margin: 0;
+    padding: 0;
   }
+  
   .container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  form {
     display: flex;
     flex-direction: column;
   }
-  .welcome img {
-    display: none;
+  
+  label {
+    margin-bottom: 5px;
+    color: #333;
   }
-  .welcome h2 { 
+  
+  input, select, textarea, button {
+    margin-bottom: 10px;
+    padding: 10px;
     font-size: 16px;
   }
-  .welcome .table {
-    font-size: 12.5px;
+  
+  textarea {
+    resize: vertical;
   }
-  .welcome button {
-    width: 80%;
+  
+  .btn {
+    background-color: #d17931;
+    color: white;
+    cursor: pointer;
+    border: #d17931 solid 1px;
   }
-  .formulaire {
-    width: 100%; /* Par exemple, réduire la largeur du formulaire */
-    padding: 15px;
+  
+  button:hover {
+    background-color: #0056b3;
   }
-
-  .btn-submit {
-    font-size: 14px; /* Redimensionner le bouton */
+  
+  .error {
+    color: red;
+    font-size: 14px;
   }
-  h1 {
-    font-size: 25px;
+  
+  .form-message {
     text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
   }
-}
+  
+  #ideasContainer {
+    margin-top: 20px;
+  }
+  
+  .idea {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+  }
+  
+  .idea h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+  }
+  
+  .idea p {
+    margin: 0 0 5px;
+  }
+  
+  .idea .idea-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .idea .idea-actions button {
+    background-color: #d17931;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .idea .idea-actions button:hover {
+    background-color: #0056b3;
+  }
+  
