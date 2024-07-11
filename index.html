@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CDN Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- link du fichier style.css -->
+     <link rel="stylesheet" href="style.css">
+
+     <!-- link du fichier script.js -->
+     <script src="script.js" defer></script>
+    <title>Boite à idées</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="formulaire">
+          <h1>Insertion d'une nouvelle idée</h1>
+          <div id="submitSuccess"></div>
+          <form id="myForm">
+            
+            <div id="libelleDiv" class="mb-3 col-lg-12">
+              <label for="libelle" class="form-label">Libellé</label>
+              <input
+                type="text"
+                id="libelle"
+                name="libelle"
+                class="form-control"
+                placeholder="organisation journée set setal"
+              />
+              <span id="libelleError" class="error"></span>
+            </div>
+
+            <div id="categorieDiv" class="hidden">
+                <select id="categorie" class="form-select" aria-label="Default select example" name="categorie">
+                    <option selected>Choisir une catégorie</option>
+                    <option value="politique">politique</option>
+                    <option value="sport">sport</option>
+                    <option value="santé">santé</option>
+                    <option value="éducation">éducation</option>
+                    <option value="citoyenneté">citoyenneté</option>
+                    <option value="autre">autre</option>
+                </select>
+                <span id="categorieError" class="error"></span>
+            </div>
+
+            
+
+            <div id="messageDiv" class="hidden">
+              <label for="message" class="form-label">message</label>
+              <textarea name="message" id="message" class="form-control" placeholder="laisser un message"></textarea>
+              <span id="messageError" class="error"></span>
+            </div>
+            
+            <button class="btn btn-submit" type="submit" id="submitBtn" disabled onclick="saveData()">
+              S'inscrire
+            </button>
+          </form>
+        </div>
+        <div class="welcome">
+            <h1>Bienvenue sur votre plateforme de boîte à idées</h1>
+          <img src="images/idea.png" alt="" />
+        </div>
+    </div>
+</body>
+</html>
