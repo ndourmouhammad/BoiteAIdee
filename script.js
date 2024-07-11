@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const messageInput = document.getElementById('message');
     const formMessage = document.getElementById('formMessage');
     const ideasContainer = document.getElementById('ideasContainer');
-    const ndour = document.getElementById('ndour');
+    const flashmessage = document.getElementById('flashmessage');
   
     const ideas = [];
   
@@ -32,39 +32,42 @@ document.addEventListener('DOMContentLoaded', function() {
         
       } else {
         form.style.display = 'none';
-        ndour.textContent = ('Veuillez corriger les erreurs et réessayer.');
-        ndour.style.color = 'red'
+        flashmessage.textContent = ('Veuillez corriger les erreurs et réessayer.');
+        flashmessage.style.color = 'red';
+       
         setTimeout(() => {
           form.style.display = 'block';
-          formMessage.textContent = '';
-          ndour.textContent ='';
+          flashmessage.innerHTML = '';
         }, 2000);
       }
     });
   
     function validateForm(libelle, categorie, message) {
-      let isValid = true;
-  
-      if (libelle.length < 3 || libelle.length > 15) {
-        showError('libelleError', 'Le libellé doit contenir entre 3 et 15 caractères.');
-        isValid = false;
+        let isValid = true;
+        const libelleRegex = /^[\p{L}\p{M}\s]{3,50}$/u;// Entre 3 et 15 caractères, incluant les lettres avec accents
+        const messageRegex = /^[\p{L}\p{M}\p{P}\p{N}\s]{3,500}$/u; // Entre 3 et 500 caractères, incluant lettres, chiffres, ponctuation, espaces
+      
+        if (!libelleRegex.test(libelle)) {
+          showError('libelleError', 'Le libellé doit contenir entre 3 et 50 caractères.');
+          isValid = false;
+        }
+      
+        if (categorie === '') {
+          showError('categorieError', 'Veuillez choisir une catégorie.');
+          isValid = false;
+        }
+      
+        if (!messageRegex.test(message)) {
+          showError('messageError', 'Le message doit contenir entre 3 et 500 caractères.');
+          isValid = false;
+        }
+      
+        return isValid;
       }
-  
-      if (categorie === '') {
-        showError('categorieError', 'Veuillez choisir une catégorie.');
-        isValid = false;
-      }
-  
-      if (message.length < 3 || message.length > 500) {
-        showError('messageError', 'Le message doit contenir entre 3 et 500 caractères.');
-        isValid = false;
-      }
-  
-      return isValid;
-    }
+      
   
     function showError(elementId, message) {
-      document.getElementById(elementId).textContent = message;
+      document.getElementById(elementId).textContent = '';
     }
   
     function clearErrors() {
@@ -77,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
       formMessage.textContent = message;
       formMessage.className = `form-message ${type}`;
       setTimeout(() => {
-        formMessage.textContent = '';
+        formMessage.style.display = "none";
       }, 2000);
     }
   

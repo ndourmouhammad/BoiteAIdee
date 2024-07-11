@@ -45,8 +45,11 @@ body {
     border: #d17931 solid 1px;
   }
   
-  button:hover {
-    background-color: #0056b3;
+.btn:hover {
+    background-color: #f8e3d2;
+    color: #d17931;
+    cursor: pointer;
+    border: #f8e3d2 solid 1px;
   }
   
   .error {
@@ -94,6 +97,6 @@ body {
   }
   
   .idea .idea-actions button:hover {
-    background-color: #0056b3;
+    background-color: #d17931;
   }
   
