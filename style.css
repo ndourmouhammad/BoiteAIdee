@@ -67,3 +67,17 @@ border: solid 2px red;
 .approved{
 border: solid 2px green;
 }
+.warning {
+color: red;
+display: none;
+}
+.form-message {
+text-align: center;
+font-size: 24px;
+}
+.form-message.success {
+color: green;
+}
+.form-message.error {
+color: red;
+}

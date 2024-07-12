@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const libelleInput = document.getElementById('libelle');
   const categorieInput = document.getElementById('categorie');
   const messageInput = document.getElementById('message');
+  const messageWarning = document.getElementById('messageWarning');
   const ideasContainer = document.getElementById('ideasContainer');
   const flashmessage = document.getElementById('flashmessage');
 
@@ -160,4 +161,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initial display of ideas
   displayIdeas();
+  // Add input event listener to enforce character limit on textarea
+  messageInput.addEventListener('input', () => {
+      if (messageInput.value.length > 255) {
+          messageInput.value = messageInput.value.substr(0, 255);
+          messageWarning.style.display = 'block';
+      } else {
+          messageWarning.style.display = 'none';
+      }
+  });
 });
