@@ -1,102 +1,69 @@
 body {
-    font-family: Arial, sans-serif;
-    background: url(images/pattern.avif);
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  input, select, textarea, button {
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  textarea {
-    resize: vertical;
-  }
-  
-  .btn {
-    background-color: #d17931;
-    color: white;
-    cursor: pointer;
-    border: #d17931 solid 1px;
-  }
-  
-.btn:hover {
-    background-color: #f8e3d2;
-    color: #d17931;
-    cursor: pointer;
-    border: #f8e3d2 solid 1px;
-  }
-  
-  .error {
-    color: red;
-    font-size: 14px;
-  }
-  
-  .form-message {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 16px;
-  }
-  
-  #ideasContainer {
-    margin-top: 20px;
-  }
-  
-  .idea {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
-  }
-  
-  .idea h2 {
-    margin: 0 0 10px;
-    font-size: 20px;
-  }
-  
-  .idea p {
-    margin: 0 0 5px;
-  }
-  
-  .idea .idea-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .idea .idea-actions button {
-    background-color: #d17931;
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-  }
-  
-  .idea .idea-actions button:hover {
-    background-color: #d17931;
-  }
-  
+  font-family: 'Roboto', sans-serif;
+ 
+  color: #333;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+font-family: 'Montserrat', sans-serif;
+font-size: 36px;
+color: #7BC4D3;
+}
+
+.card-title {
+font-family: 'Montserrat', sans-serif;
+font-size: 18px;
+}
+
+.card-subtitle {
+font-family: 'Montserrat', sans-serif;
+font-size: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.boutons {
+  margin-top: auto; /* Pour pousser les boutons en bas */
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.btn-primary {
+background-color: white;
+border: 1px solid #7BC4D3;
+border-radius: 25px;
+color: #7BC4D3;
+}
+
+
+.btn-danger {
+background-color: #e74c3c;
+border: none;
+}
+
+.error {
+
+color: red;
+}
+.not-approved {
+border: solid 2px red;
+}
+.approved{
+border: solid 2px green;
+}

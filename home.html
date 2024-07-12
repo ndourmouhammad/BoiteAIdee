@@ -1,52 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boîte à Idées</title>
-  <!-- Link Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Link your custom CSS -->
-  <link rel="stylesheet" href="style.css">
-  <!-- Link your custom JavaScript -->
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <div class="container">
-    <h1 class="mt-5">Boîte à Idées</h1>
-    
-    <form id="ideaForm" class="mt-4">
-      <div id="libelleDiv" class="mb-3">
-        <label for="libelle" class="form-label">Libellé</label>
-        <input type="text" class="form-control" id="libelle" name="libelle">
-        <span id="libelleError" class="error form-text"></span>
-      </div>
-      <div id="categorieDiv" class="mb-3">
-        <label for="categorie" class="form-label">Catégorie</label>
-        <select class="form-select" id="categorie" name="categorie">
-          <option value="">Choisir une catégorie</option>
-          <option value="politique">Politique</option>
-          <option value="sport">Sport</option>
-          <option value="sante">Santé</option>
-          <option value="education">Éducation</option>
-        </select>
-        <span id="categorieError" class="error form-text"></span>
-      </div>
-      <div id="messageDiv" class="mb-3">
-        <label for="message" class="form-label">Message</label>
-        <textarea class="form-control" id="message" name="message"></textarea>
-        <span id="messageError" class="error form-text"></span>
-      </div>
-      <button type="submit" class="btn btn-primary">Ajouter l'idée</button>
-      <div id="formMessage" class="form-message mt-3"></div>
-    </form>
-    <div id="flashmessage"></div>
-    <div id="ideasContainer" class="mt-5"></div>
-  </div>
+<html lang="fr">
 
-  <!-- Link Bootstrap JS and Popper.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boîte à d’idées</title>
+    <!-- Link Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">Ajouter une idée</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form id="ideaForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-6" id="libelleDiv">
+                            <label for="libelle" class="form-label">Libellé</label>
+                            <input type="text" class="form-control" id="libelle" placeholder="Libellé" name="libelle">
+                            <span id="libelleError" class="error form-text"></span>
+                        </div>
+
+                        <div class="form-group col-md-6" id="categorieDiv">
+                            <label for="categorie" class="form-label">Catégorie</label>
+                            <select class="form-select" id="categorie" name="categorie">
+                              <option value="">Choisir une catégorie</option>
+                              <option value="politique">Politique</option>
+                              <option value="sport">Sport</option>
+                              <option value="sante">Santé</option>
+                              <option value="education">Éducation</option>
+                            </select>
+                            <span id="categorieError" class="error form-text"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="messageDiv">
+                        <label for="message" class="form-label">Description</label>
+                        <textarea class="form-control" id="message" rows="5" placeholder="Description" name="message"></textarea>
+                        <span id="messageError" class="error form-text"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Ajouter l'idée</button>
+                    <div id="formMessage" class="form-message mt-3"></div>
+                </form>
+                <div id="flashmessage"></div>
+                
+            </div>
+            <div class="col-md-6 text-center ">
+                <img src="img/ideas.jpg" class="img-fluid" alt="Image illustrant une idée" style="border-radius: 10px; ">
+            </div>
+        </div>
+
+        <div class="row mt-5" id="ideasContainer">
+            <!-- Dynamic content will be appended here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
