@@ -32,16 +32,19 @@ async function authenticateUser() {
     save.innerText = "Enregistrement en cours...";
   
     // Affichage pour vérification
-    console.log(libelle, categorie, message, statut = null);
+    console.log(libelle, categorie, message, statut);
   
     const user = await authenticateUser();
   
     if (user) {
       try {
         // Construction de l'objet à insérer
-        const insertObject = { libelle, categorie, message };
+        const insertObject = { libelle, categorie, message, statut };
   
-        
+        // Ajout du champ statut si sa valeur n'est pas null
+      if (statut !== "") {
+        insertObject.statut = statut === null; // Convertir la chaîne "true"/"false" en boolean
+      }
   
         // Insertion dans la base de données Supabase
         const { data, error } = await database
@@ -82,6 +85,50 @@ const getIdeas = async () => {
     }
 };
 
+/*
+      ideasContainer.innerHTML = '';
+
+      ideas.forEach((idea, index) => {
+          const truncatedMessage = idea.message.length > 255 ? `${idea.message.substr(0, 255)}...` : idea.message;
+
+          const ideaCard = document.createElement('div');
+          ideaCard.className = `col-md-4 col-sm-4 mb-5`;
+
+          // Déterminer la classe pour la carte en fonction de approved
+          let cardClass = 'card';
+          if (idea.approved === true) {
+              cardClass += ' approved';
+          } else if (idea.approved === false) {
+              cardClass += ' not-approved';
+          }
+
+          ideaCard.innerHTML = `
+              <div class="${cardClass}">
+                  <div class="card-body">
+                      <h5 class="card-title">${idea.libelle}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">${idea.categorie}</h6>
+                      <p class="card-text">${truncatedMessage}</p>
+                      <div class="boutons">
+                          ${idea.approved === null ? `
+                              <button class="btn approve-btn" onclick="toggleApproval(${index}, true)">
+                                  <img src="img/approved.svg" alt="Approuver">
+                              </button>
+                              <button class="btn disapprove-btn" onclick="toggleApproval(${index}, false)">
+                                  <img src="img/not-approved.svg" alt="Désapprouver">
+                              </button>
+                          ` : ''}
+                          <button class="btn delete-btn" onclick="deleteIdea(${index})">
+                              <img src="img/trashs.svg" alt="Supprimer">
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          `;
+          ideasContainer.appendChild(ideaCard);
+      });
+  }
+*/
+
 // Fonction pour afficher les idées dans l'interface
 function displayIdeas(ideas) {
     const ideasContainer = document.getElementById("ideasContainer");
@@ -102,40 +149,42 @@ function displayIdeas(ideas) {
         const ideaCard = document.createElement("div");
         ideaCard.className = "col-md-4 col-sm-4 mb-5";
 
+        const card = document.createElement("div");
+        card.className = "card";
+
         // Déterminez la classe en fonction de l'état d'approbation
-        if (idea.approved === true) {
-            ideaCard.classList.add("approved");
-        } else if (idea.approved === false) {
-            ideaCard.classList.add("not-approved");
+        if (idea.statut === true) {
+            card.classList.add("approved");
+        } else if (idea.statut === false) {
+            card.classList.add("not-approved");
         }
 
-        ideaCard.innerHTML = `
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">${idea.libelle}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">${idea.categorie}</h6>
-                    <p class="card-text">${truncatedMessage}</p>
-                    <div class="buttons">
-                        ${
-                            idea.approved !== null
-                                ? `
-                                    <button class="btn approve-btn" onclick="toggleApproval('${idea.id}', true)">
-                                        <img src="img/approved.svg" alt="Image illustrant une idée">
-                                    </button>
-                                    <button class="btn disapprove-btn" onclick="toggleApproval('${idea.id}', false)">
-                                        <img src="img/not-approved.svg" alt="Image illustrant une idée">
-                                    </button>
-                                `
-                                : ''
-                        }
-                        <button class="btn delete-btn" onclick="deleteIdea('${idea.id}')">
-                             <img src="img/trashs.svg" alt="Image illustrant une idée">
-                        </button>
-                    </div>
+        card.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">${idea.libelle}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">${idea.categorie}</h6>
+                <p class="card-text">${truncatedMessage}</p>
+                <div class="buttons">
+                    ${
+                        
+                             `
+                                <button class="btn approve-btn" onclick="toggleApproval('${idea.id}', true)">
+                                    <img src="img/approved.svg" alt="Image illustrant une idée">
+                                </button>
+                                <button class="btn disapprove-btn" onclick="toggleApproval('${idea.id}', false)">
+                                    <img src="img/not-approved.svg" alt="Image illustrant une idée">
+                                </button>
+                            `
+                            
+                    }
+                    <button class="btn delete-btn" onclick="deleteIdea('${idea.id}')">
+                        <img src="img/trashs.svg" alt="Image illustrant une idée">
+                    </button>
                 </div>
             </div>
         `;
 
+        ideaCard.appendChild(card);
         row.appendChild(ideaCard); // Ajout de la carte à la ligne actuelle
     });
 }
@@ -143,7 +192,11 @@ function displayIdeas(ideas) {
 // Fonction pour basculer l'état d'approbation d'une idée
 async function toggleApproval(ideaId, approved) {
     try {
-        const { data, error } = await database.from('idees').update({ approved }).eq('id', ideaId);
+        const statut = approved;
+        const { data, error } = await database
+            .from('idees')
+            .update({ statut })
+            .eq('id', ideaId);
 
         if (error) {
             throw error;
@@ -156,6 +209,8 @@ async function toggleApproval(ideaId, approved) {
         alert(`Erreur lors de l'${approved ? 'approbation' : 'désapprobation'} de l'idée`);
     }
 }
+
+
 
 // Fonction pour supprimer une idée
 async function deleteIdea(ideaId) {
