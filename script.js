@@ -1,117 +1,183 @@
-const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzaHZmYmlpZHVzemJjcHptamZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjA4MDk1MzUsImV4cCI6MjAzNjM4NTUzNX0.u5vyuxvSL9JjFLsHphtIFmpoFeKuq6gxToL-WNuIMyQ";
-        const url = "https://ushvfbiiduszbcpzmjfe.supabase.co";
+const key =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzaHZmYmlpZHVzemJjcHptamZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjA4MDk1MzUsImV4cCI6MjAzNjM4NTUzNX0.u5vyuxvSL9JjFLsHphtIFmpoFeKuq6gxToL-WNuIMyQ";
+const url = "https://ushvfbiiduszbcpzmjfe.supabase.co";
+
+const database = supabase.createClient(url, key);
+
+async function authenticateUser() {
+    const { data, error } = await database.auth.signInWithPassword({
+      email: "ndourmouhammad15@gmail.com",
+      password: "Mouhammad@2024",
+    });
+  
+    if (error) {
+      console.error("Erreur lors de l'authentification:", error);
+      return null;
+    } else {
+      console.log("Utilisateur authentifié:", data.user);
+      return data.user;
+    }
+  }
+
+
+
+  const save = document.querySelector("#save");
+  save.addEventListener("click", async (e) => {
+    e.preventDefault();
+    let libelle = document.querySelector("#libelle").value;
+    let categorie = document.querySelector("#categorie").value;
+    let message = document.querySelector("#message").value;
+    let statut = document.querySelector("#statut").value;
+  
+    save.innerText = "Enregistrement en cours...";
+  
+    // Affichage pour vérification
+    console.log(libelle, categorie, message, statut = null);
+  
+    const user = await authenticateUser();
+  
+    if (user) {
+      try {
+        // Construction de l'objet à insérer
+        const insertObject = { libelle, categorie, message };
+  
         
-        const database = supabase.createClient(url, key);
+  
+        // Insertion dans la base de données Supabase
+        const { data, error } = await database
+          .from("idees")
+          .insert([insertObject]);
+  
+        if (error) {
+          throw error;
+        }
+  
+        alert("Idée ajoutée avec succès:", data);
+      } catch (error) {
+        console.error("Erreur lors de l'ajout de l'idée:", error);
+      }
+    }
+  
+    save.innerText = "Ajouter une idée";
+    document.getElementById("ideaForm").reset();
+    getIdeas();
+  });
+  
 
-        async function authenticateUser() {
-            const { data, error } = await database.auth.signInWithPassword({
-                email: "ndourmouhammad15@gmail.com",
-                password: "Mouhammad@2024",
-            });
 
-            if (error) {
-                console.error("Erreur lors de l'authentification:", error);
-                return null;
-            } else {
-                console.log("Utilisateur authentifié:", data.user);
-                return data.user;
-            }
+// Fonction pour récupérer les idées depuis database
+const getIdeas = async () => {
+    try {
+        const { data, error } = await database.from('idees').select('*');
+
+        if (error) {
+            throw error;
         }
 
-        const save = document.querySelector("#save");
-        save.addEventListener("click", async (e) => {
-            e.preventDefault();
-            let libelle = document.querySelector("#libelle").value;
-            let categorie = document.querySelector("#categorie").value;
-            let message = document.querySelector("#message").value;
+        console.log("Idées récupérées avec succès:", data);
+        displayIdeas(data); // Appel de la fonction pour afficher les idées
+    } catch (error) {
+        console.error("Erreur lors de la récupération des idées:", error.message);
+        alert("Erreur lors de la récupération des idées");
+    }
+};
 
-            save.innerText = "Enregistrement en cours...";
+// Fonction pour afficher les idées dans l'interface
+function displayIdeas(ideas) {
+    const ideasContainer = document.getElementById("ideasContainer");
+    ideasContainer.innerHTML = ""; // Efface le contenu précédent
 
-            // Affichage pour vérification
-            console.log(libelle, categorie, message);
+    ideas.forEach((idea, index) => {
+        const truncatedMessage = idea.message.length > 255 ? `${idea.message.substr(0, 255)}...` : idea.message;
 
-            const user = await authenticateUser();
+        // Création d'une nouvelle ligne toutes les 3 idées pour respecter le système de grille de Bootstrap 3
+        if (index % 3 === 0) {
+            const row = document.createElement("div");
+            row.className = "row";
+            ideasContainer.appendChild(row);
+        }
 
-            if (user) {
-                try {
-                    const { data, error } = await database
-                        .from("idees")
-                        .insert([{ libelle, categorie, message }]);
+        const row = ideasContainer.lastChild; // Récupération de la dernière ligne ajoutée
 
-                    if (error) {
-                        throw error;
-                    }
+        const ideaCard = document.createElement("div");
+        ideaCard.className = "col-md-4 col-sm-4 mb-5";
 
-                    alert("Idée ajoutée avec succès:", data);
-                } catch (error) {
-                    console.error("Erreur lors de l'ajout de l'idée:", error);
-                }
-            }
-            save.innerText = "Ajouter une idée";
-            document.getElementById("ideaForm").reset();
-            getIdee();
-        });
+        // Déterminez la classe en fonction de l'état d'approbation
+        if (idea.approved === true) {
+            ideaCard.classList.add("approved");
+        } else if (idea.approved === false) {
+            ideaCard.classList.add("not-approved");
+        }
 
-        const getIdee = async () => {
-            try {
-                console.log("getIdee function started");
-                const tbody = document.getElementById("tbody");
-                const loading = document.getElementById("loading");
-                let tr = "";
+        ideaCard.innerHTML = `
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${idea.libelle}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${idea.categorie}</h6>
+                    <p class="card-text">${truncatedMessage}</p>
+                    <div class="buttons">
+                        ${
+                            idea.approved !== null
+                                ? `
+                                    <button class="btn approve-btn" onclick="toggleApproval('${idea.id}', true)">
+                                        <img src="img/approved.svg" alt="Image illustrant une idée">
+                                    </button>
+                                    <button class="btn disapprove-btn" onclick="toggleApproval('${idea.id}', false)">
+                                        <img src="img/not-approved.svg" alt="Image illustrant une idée">
+                                    </button>
+                                `
+                                : ''
+                        }
+                        <button class="btn delete-btn" onclick="deleteIdea('${idea.id}')">
+                             <img src="img/trashs.svg" alt="Image illustrant une idée">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
 
-                loading.innerHTML = "Loading...";
-                console.log("Fetching data from database");
-                const res = await database.from("idees").select("*");
-                console.log("Data fetched", res);
+        row.appendChild(ideaCard); // Ajout de la carte à la ligne actuelle
+    });
+}
 
-                if (res.error) {
-                    console.error("Error fetching data:", res.error);
-                    loading.innerHTML = "Error loading data";
-                    return;
-                }
+// Fonction pour basculer l'état d'approbation d'une idée
+async function toggleApproval(ideaId, approved) {
+    try {
+        const { data, error } = await database.from('idees').update({ approved }).eq('id', ideaId);
 
-                if (res.data.length === 0) {
-                    console.log("No data available");
-                    loading.innerHTML = "No data available";
-                    return;
-                }
+        if (error) {
+            throw error;
+        }
 
-                for (var i in res.data) {
-                    tr += `<tr>
-                        <td>${res.data[i].libelle}</td>
-                        <td>${res.data[i].categorie}</td>
-                        <td>${res.data[i].message}</td>
-                        <td><button onclick='deleteIdea(${res.data[i].id})' class="btn btn-danger">Supprimer</button></td>
-                    </tr>`;
-                }
-                tbody.innerHTML = tr;
-                loading.innerHTML = "";
-            } catch (error) {
-                console.error("Error in getIdee function", error);
-                loading.innerHTML = "Error loading data";
-            }
-        };
+        console.log(`Idée ${ideaId} ${approved ? 'approuvée' : 'désapprouvée'} avec succès:`, data);
+        getIdeas(); // Rafraîchir la liste des idées après modification
+    } catch (error) {
+        console.error(`Erreur lors de l'${approved ? 'approbation' : 'désapprobation'} de l'idée ${ideaId}:`, error.message);
+        alert(`Erreur lors de l'${approved ? 'approbation' : 'désapprobation'} de l'idée`);
+    }
+}
 
-        const deleteIdea = async (id) => {
-            try {
-                console.log(`Attempting to delete idea with ID: ${id}`);
-                const { data, error } = await database.from("idees").delete().eq("id", id);
+// Fonction pour supprimer une idée
+async function deleteIdea(ideaId) {
+    try {
+        const { data, error } = await database.from('idees').delete().eq('id', ideaId);
 
-                if (error) {
-                    console.error("Error deleting idea:", error);
-                    alert("Erreur lors de la suppression");
-                    return;
-                }
+        if (error) {
+            throw error;
+        }
 
-                alert("Supprimée avec succès");
-                getIdee();
-            } catch (error) {
-                console.error("Error in deleteIdea function", error);
-            }
-        };
+        console.log("Idée supprimée avec succès:", data);
+        alert("Idée supprimée avec succès");
 
-        window.deleteIdea = deleteIdea;
-        document.addEventListener("DOMContentLoaded", getIdee);
+        getIdeas(); // Rafraîchir la liste des idées après suppression
+    } catch (error) {
+        console.error("Erreur lors de la suppression de l'idée:", error.message);
+        alert("Erreur lors de la suppression de l'idée");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", getIdeas); // Appel initial pour récupérer les idées au chargement de la page
+
 // document.addEventListener('DOMContentLoaded', function() {
 //   const form = document.getElementById('ideaForm');
 //   const libelleInput = document.getElementById('libelle');

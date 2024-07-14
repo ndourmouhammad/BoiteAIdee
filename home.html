@@ -35,6 +35,7 @@
             <div class="col-md-6">
                 <form id="ideaForm">
                     <div class="form-row">
+                        <input type="hidden" id="statut" name="statut" value="null">
                         <div class="form-group col-md-6" id="libelleDiv">
                             <label for="libelle" class="form-label">Libellé</label>
                             <input type="text" class="form-control" id="libelle" placeholder="Libellé" name="libelle">
@@ -73,24 +74,9 @@
             </div>
         </div>
 
-        <!-- <div class="row mt-5" id="ideasContainer"> -->
-          <div class="container">
-            <h4 id="loading"></h4>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Libelle</th>
-                            <th>Catégorie</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody">
-                    </tbody>
-                </table>
-            </div>
+        <div class="row mt-5" id="ideasContainer">
+
         </div>
-    <!-- </div> -->
     <!-- Inclure la bibliothèque Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <!-- Inclure votre script personnalisé -->
