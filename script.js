@@ -228,6 +228,5 @@ document.querySelector("#message").addEventListener("input", (e) => {
 
     if (messageLength > maxLength) {
         messageField.value = messageField.value.substring(0, maxLength);
-        document.getElementById('messageWarning').textContent = 'test'
     }
 });
