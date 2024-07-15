@@ -227,11 +227,10 @@ document.addEventListener("DOMContentLoaded", getIdeas); // Initial call to fetc
 
 // Real-time validation for the message field
 document.querySelector("#message").addEventListener("input", (e) => {
-    const maxLength = 255;
-    const messageField = e.target;
-    const messageLength = messageField.value.length;
-
-    if (messageLength > maxLength) {
-        messageField.value = messageField.value.substring(0, maxLength);
+    if (messageInput.value.length > 255) {
+        messageInput.value = messageInput.value.substr(0, 255);
+        messageWarning.style.display = 'block';
+    } else {
+        messageWarning.style.display = 'none';
     }
 });
