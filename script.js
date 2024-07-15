@@ -52,9 +52,14 @@ save.addEventListener("click", async (e) => {
         getIdeas();
     } else {
         showFormMessage('Veuillez corriger les erreurs et réessayer.', 'error');
+        flashmessage.textContent = 'Veuillez corriger les erreurs et réessayer.';
+        flashmessage.style.color = 'red';
+        flashmessage.style.textAlign = 'center';
+        flashmessage.style.fontSize = '24px';
         document.getElementById('ideaForm').style.display = "none";
         setTimeout(() => {
             document.getElementById('ideaForm').style.display = "block";
+            flashmessage.textContent = '';
         }, 2000);
     }
 });
