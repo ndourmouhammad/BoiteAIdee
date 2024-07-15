@@ -227,6 +227,7 @@ document.addEventListener("DOMContentLoaded", getIdeas); // Initial call to fetc
 
 // Real-time validation for the message field
 document.querySelector("#message").addEventListener("input", (e) => {
+    const messageInput = document.getElementById('message');
     if (messageInput.value.length > 255) {
         messageInput.value = messageInput.value.substr(0, 255);
         messageWarning.style.display = 'block';
