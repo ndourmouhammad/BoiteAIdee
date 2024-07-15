@@ -28,6 +28,7 @@ async function authenticateUser() {
     let categorie = document.querySelector("#categorie").value;
     let message = document.querySelector("#message").value;
     let statut = document.querySelector("#statut").value;
+    statut = null;
   
     save.innerText = "Enregistrement en cours...";
   
@@ -42,9 +43,9 @@ async function authenticateUser() {
         const insertObject = { libelle, categorie, message, statut };
   
         // Ajout du champ statut si sa valeur n'est pas null
-      if (statut !== "") {
-        insertObject.statut = statut === null; // Convertir la chaîne "true"/"false" en boolean
-      }
+    //   if (statut !== "") {
+    //     insertObject.statut = statut === null; // Convertir la chaîne "true"/"false" en boolean
+    //   }
   
         // Insertion dans la base de données Supabase
         const { data, error } = await database
